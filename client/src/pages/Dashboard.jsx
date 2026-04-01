@@ -71,7 +71,7 @@ function BookingRow({ booking, isOwner, onConfirm, onDecline }) {
 export default function Dashboard() {
   const { user, isOwner } = useAuth();
   const [tab, setTab] = useState(isOwner ? 'incoming' : 'bookings');
-  const [bookings, setBookings] = useState([]);
+  const [bookings, setBookings] = useState({ my: [], incoming: [] });
   const [myListings, setMyListings] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -141,7 +141,7 @@ export default function Dashboard() {
             { label: 'Active Listings', value: myListings.filter((l) => l.status === 'ACTIVE').length },
             { label: 'Pending Requests', value: bookings.incoming?.filter((b) => b.status === 'PENDING').length || 0 },
             { label: 'Total Bookings', value: bookings.incoming?.filter((b) => ['CONFIRMED', 'COMPLETED'].includes(b.status)).length || 0 },
-            { label: 'Estimated Earnings', value: formatCurrency(bookings.incoming?.filter((b) => ['CONFIRMED', 'COMPLETED'].includes(b.status)).reduce((s, b) => s + parseFloat(b.ownerPayout), 0) || 0) },
+            { label: 'Estimated Earnings', value: formatCurrency((bookings.incoming?.filter((b) => ['CONFIRMED', 'COMPLETED'].includes(b.status)) || []).reduce((s, b) => s + parseFloat(b.ownerPayout), 0)) },
           ].map((stat) => (
             <div key={stat.label} className="card p-4 text-center">
               <div className="text-2xl font-bold text-blue-600">{stat.value}</div>
