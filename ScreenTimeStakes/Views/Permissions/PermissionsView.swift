@@ -28,8 +28,10 @@ struct PermissionsView: View {
                 .padding(.bottom, 48)
         }
         .navigationTitle("")
-        .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
+        #if os(iOS)
+        .navigationBarTitleDisplayMode(.inline)
+        #endif
     }
 
     // MARK: - Sections

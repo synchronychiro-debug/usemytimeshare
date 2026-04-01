@@ -112,5 +112,5 @@ private struct MemberAvatarRow: View {
         ChallengeCard(challenge: PreviewData.completedChallenge)
     }
     .padding()
-    .background(Color(.systemGroupedBackground))
+    .background(Color(UIColor.systemGroupedBackground))
 }

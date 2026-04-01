@@ -36,9 +36,9 @@ struct AvatarView: View {
     private func rankColor(_ rank: Int) -> Color {
         switch rank {
         case 1:  return .yellow
-        case 2:  return Color(.systemGray3)
+        case 2:  return Color(UIColor.systemGray3)
         case 3:  return Color(red: 0.8, green: 0.5, blue: 0.2)
-        default: return Color(.systemGray4)
+        default: return Color(UIColor.systemGray4)
         }
     }
 }
@@ -47,7 +47,7 @@ struct AvatarView: View {
     HStack(spacing: 16) {
         AvatarView(initials: "AK", rank: 1)
         AvatarView(initials: "BC", color: .green, rank: 2)
-        AvatarView(initials: "CD", color: .orange, size: 56, rank: 3)
+        AvatarView(initials: "CD", size: 56, color: .orange, rank: 3)
     }
     .padding()
 }
