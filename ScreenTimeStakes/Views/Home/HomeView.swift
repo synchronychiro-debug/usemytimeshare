@@ -13,7 +13,6 @@ struct HomeView: View {
         // that a skeleton/refresh is preferable to a blocking spinner
         challengeList
         .navigationTitle("My Challenges")
-        .toolbar { toolbarContent }
         .task {
             if let userId = router.currentUser?.id {
                 await vm.loadChallenges(for: userId)
@@ -101,43 +100,14 @@ struct HomeView: View {
             }
 
             HStack(spacing: 12) {
-                Button("Create") { router.navigate(to: .createChallenge) }
+                Button("Compete") { router.selectedTab = .compete }
                     .buttonStyle(.stsPrimary)
-                Button("Join") { router.navigate(to: .joinChallenge) }
-                    .buttonStyle(.stsSecondary)
             }
             .padding(.horizontal, 32)
         }
         .padding(.horizontal, 32)
     }
 
-    // MARK: - Toolbar
-
-    @ToolbarContentBuilder
-    private var toolbarContent: some ToolbarContent {
-        ToolbarItemGroup(placement: .primaryAction) {
-            Button {
-                router.navigate(to: .createChallenge)
-            } label: {
-                Image(systemName: "plus")
-            }
-
-            Menu {
-                Button("Join Challenge", systemImage: "person.badge.plus") {
-                    router.navigate(to: .joinChallenge)
-                }
-                Divider()
-                Button("Sign Out", systemImage: "rectangle.portrait.and.arrow.right", role: .destructive) {
-                    router.signOut()
-                }
-            } label: {
-                AvatarView(
-                    initials: router.currentUser?.avatarInitials ?? "?",
-                    size: 32
-                )
-            }
-        }
-    }
 }
 
 #Preview {

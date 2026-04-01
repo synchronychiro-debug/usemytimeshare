@@ -14,10 +14,35 @@ enum AuthRoute: Hashable {
 // MARK: - Post-auth route enum
 /// Destinations available once the user is authenticated.
 enum AppRoute: Hashable {
-    case createChallenge
-    case joinChallenge
     case challengeDetail(Challenge)
     case results(Challenge)
+}
+
+// MARK: - Tab
+/// The four main tabs of the authenticated app.
+enum AppTab: Int, CaseIterable {
+    case home
+    case compete
+    case friends
+    case profile
+
+    var title: String {
+        switch self {
+        case .home:    return "Home"
+        case .compete: return "Compete"
+        case .friends: return "Friends"
+        case .profile: return "Profile"
+        }
+    }
+
+    var icon: String {
+        switch self {
+        case .home:    return "house.fill"
+        case .compete: return "trophy.fill"
+        case .friends: return "person.2.fill"
+        case .profile: return "person.fill"
+        }
+    }
 }
 
 // MARK: - AppRouter
@@ -27,7 +52,8 @@ enum AppRoute: Hashable {
 final class AppRouter {
 
     // MARK: State
-    var path = NavigationPath()
+    var path = NavigationPath()       // Home tab navigation stack
+    var selectedTab: AppTab = .home
     var isAuthenticated: Bool = false
     var currentUser: User?
 
