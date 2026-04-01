@@ -39,15 +39,13 @@ final class AuthService {
         guard phoneNumber.filter(\.isNumber).count >= 10 else {
             throw AuthError.invalidPhoneNumber
         }
-        // Simulate ~0.8 s network round-trip
-        try await Task.sleep(for: .milliseconds(800))
+        // No delay in mock — real implementation will await network
     }
 
     /// Simulate verifying the SMS code.
     /// - Returns: The signed-in User on success.
     /// - The mock accepts only "123456" as the valid code.
     func verifyCode(_ code: String, for phoneNumber: String) async throws -> User {
-        try await Task.sleep(for: .milliseconds(600))
         guard code == "123456" else { throw AuthError.invalidCode }
 
         let user = User(

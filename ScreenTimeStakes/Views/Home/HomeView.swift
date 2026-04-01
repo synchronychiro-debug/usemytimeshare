@@ -9,14 +9,9 @@ struct HomeView: View {
     @State private var vm = HomeViewModel()
 
     var body: some View {
-        Group {
-            if vm.isLoading {
-                ProgressView("Loading challenges…")
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-            } else {
-                challengeList
-            }
-        }
+        // Skip the loading spinner — mock is instant, real backend will be fast enough
+        // that a skeleton/refresh is preferable to a blocking spinner
+        challengeList
         .navigationTitle("My Challenges")
         .toolbar { toolbarContent }
         .task {

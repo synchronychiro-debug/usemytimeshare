@@ -36,13 +36,13 @@ final class ChallengeService {
 
     /// Returns all challenges that include the given userId as a member.
     func fetchMyChallenges(for userId: UUID) async throws -> [Challenge] {
-        try await Task.sleep(for: .milliseconds(500))
+        // No delay in mock
         return store.filter { $0.members.contains { $0.userId == userId } }
     }
 
     /// Returns a single challenge by id.
     func fetchChallenge(id: UUID) async throws -> Challenge {
-        try await Task.sleep(for: .milliseconds(200))
+        // No delay in mock
         guard let challenge = store.first(where: { $0.id == id }) else {
             throw ChallengeError.challengeNotFound
         }
@@ -58,7 +58,7 @@ final class ChallengeService {
         period: ChallengePeriod,
         creator: User
     ) async throws -> Challenge {
-        try await Task.sleep(for: .milliseconds(400))
+        // No delay in mock
 
         let now = Date()
         let end: Date = period == .daily
@@ -95,7 +95,7 @@ final class ChallengeService {
 
     /// Joins an existing challenge using an invite code.
     func joinChallenge(inviteCode: String, user: User) async throws -> Challenge {
-        try await Task.sleep(for: .milliseconds(400))
+        // No delay in mock
 
         guard let index = store.firstIndex(where: {
             $0.inviteCode.uppercased() == inviteCode.uppercased()

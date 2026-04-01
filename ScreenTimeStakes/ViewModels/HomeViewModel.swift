@@ -9,6 +9,7 @@ final class HomeViewModel {
     // MARK: - State
     var challenges: [Challenge] = []
     var isLoading: Bool = false
+    var hasLoaded: Bool = false
     var errorMessage: String?
 
     private let service = ChallengeService.shared
@@ -39,5 +40,6 @@ final class HomeViewModel {
             errorMessage = error.localizedDescription
         }
         isLoading = false
+        hasLoaded = true
     }
 }

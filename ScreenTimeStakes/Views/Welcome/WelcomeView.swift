@@ -6,29 +6,49 @@ import SwiftUI
 struct WelcomeView: View {
 
     @Binding var path: NavigationPath
+    @State private var isReady = false   // drives fade-in after brief settle
 
     var body: some View {
-        VStack(spacing: 0) {
+        ZStack {
+            // Content fades in once the view has settled
+            if isReady {
+                VStack(spacing: 0) {
 
-            Spacer()
+                    Spacer()
 
-            // Hero illustration
-            heroSection
+                    // Hero illustration
+                    heroSection
 
-            Spacer()
+                    Spacer()
 
-            // Value props
-            featureList
-                .padding(.bottom, 40)
+                    // Value props
+                    featureList
+                        .padding(.bottom, 40)
 
-            Spacer()
+                    Spacer()
 
-            // CTA
-            actionButtons
-                .padding(.horizontal, 24)
-                .padding(.bottom, 48)
+                    // CTA
+                    actionButtons
+                        .padding(.horizontal, 24)
+                        .padding(.bottom, 48)
+                }
+                .transition(.opacity)
+            } else {
+                // Shown briefly on first launch while SwiftUI settles
+                ProgressView()
+                    .scaleEffect(1.2)
+                    .transition(.opacity)
+            }
         }
+        .animation(.easeIn(duration: 0.25), value: isReady)
         .navigationBarHidden(true)
+        .onAppear {
+            // One-frame delay so the NavigationStack is fully laid out
+            // before we render the full welcome content
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                isReady = true
+            }
+        }
     }
 
     // MARK: - Sections
